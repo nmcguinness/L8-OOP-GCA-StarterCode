@@ -70,11 +70,11 @@ public class Server
      */
     public static void main(String[] args) throws Exception
     {
-        String url = "jdbc:mysql://localhost:3306/taskhub?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+        String url = "jdbc:mysql://localhost:3306/taskhub";
         String user = "root";
         String pass = "";
 
         TaskDao dao = new JdbcTaskDao(url, user, pass);
-        new Server(9000, dao).start();
+        new Server(9001, dao).start();
     }
 }

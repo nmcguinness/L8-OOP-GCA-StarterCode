@@ -1,5 +1,7 @@
 package org.full.shared;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Represents a standard JSON response sent from the server to a client.
  *
@@ -13,6 +15,14 @@ public class ServerResponse<T>
     private T _data;
 
     // === Constructors ===
+    /**
+     * Creates an empty response.
+     * Required for Jackson deserialization.
+     */
+    public ServerResponse()
+    {
+    }
+
     /**
      * Creates a response with a status, message, and data payload.
      *
@@ -31,67 +41,54 @@ public class ServerResponse<T>
     }
 
     // === Properties ===
-    /**
-     * Gets the response status.
-     *
-     * @return The response status string.
-     */
     public String getStatus()
     {
         return _status;
     }
 
-    /**
-     * Gets the response message.
-     *
-     * @return The message explaining the result.
-     */
+    public void setStatus(String status)
+    {
+        _status = status;
+    }
+
     public String getMessage()
     {
         return _message;
     }
 
-    /**
-     * Gets the response payload data.
-     *
-     * @return The payload data, or null.
-     */
+    public void setMessage(String message)
+    {
+        _message = message;
+    }
+
     public T getData()
     {
         return _data;
     }
 
+    public void setData(T data)
+    {
+        _data = data;
+    }
+
     // === Methods ===
-    /**
-     * Creates a successful response.
-     *
-     * @param message Success message.
-     * @param data Optional payload.
-     * @param <T> Payload type.
-     * @return An OK response.
-     */
     public static <T> ServerResponse<T> ok(String message, T data)
     {
         return new ServerResponse<>("OK", message, data);
     }
 
-    /**
-     * Creates an error response.
-     *
-     * @param message Error message.
-     * @param <T> Payload type.
-     * @return An ERROR response.
-     */
     public static <T> ServerResponse<T> error(String message)
     {
         return new ServerResponse<>("ERROR", message, null);
     }
 
     /**
-     * Indicates whether the response represents success.
+     * Convenience helper for Java code only.
+     * It should not appear in JSON.
      *
      * @return True when the status is OK.
      */
+    @JsonIgnore
     public boolean isOk()
     {
         return "OK".equals(_status);
