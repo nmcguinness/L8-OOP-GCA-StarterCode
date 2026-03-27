@@ -36,6 +36,8 @@ public class TaskClient
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true))
         {
+            String clientName = args.length > 0 ? args[0] : "Unknown";
+            System.out.println("Starting client " + clientName);
             System.out.println("Connected to server at " + HOST + ":" + PORT);
 
             sendAndPrint(out, in, mapper, createRequest("GET_ALL", null));
